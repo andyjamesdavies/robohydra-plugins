@@ -1,4 +1,5 @@
 var heads = require('robohydra').heads,
+    RoboHydraHead = heads.RoboHydraHead,
     RoboHydraHeadWatchdog = heads.RoboHydraHeadWatchdog,
     RoboHydraHeadProxy = heads.RoboHydraHeadProxy;
 
@@ -7,6 +8,17 @@ exports.getBodyParts = function(config) {
 
   return {
     heads: [
+      new RoboHydraHead({
+        name: "filterfbauthtoken",
+        path: '/fb/graph/.*',
+        handler: function (req, res, next) {
+          var auth_token = req.url.match(/auth_token=(.*)$/)[1];
+          req.url = req.url.replace(auth_token, auth_token + '#_=_');
+          
+          next(req, res);
+        }
+      }),
+
       new RoboHydraHeadWatchdog({
           // Note that res.body is always uncompressed, even if
           // the original response was compressed. If you really
