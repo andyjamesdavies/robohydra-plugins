@@ -1,5 +1,4 @@
 var heads = require('robohydra').heads,
-    RoboHydraHead = heads.RoboHydraHead,
     RoboHydraHeadWatchdog = heads.RoboHydraHeadWatchdog,
     RoboHydraHeadProxy = heads.RoboHydraHeadProxy;
 
